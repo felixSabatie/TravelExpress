@@ -60,6 +60,10 @@ ActiveRecord::Schema.define(version: 2018_10_23_180357) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "drivers", "accounts"
+  add_foreign_key "drivers", "lifts"
   add_foreign_key "lifts_rules", "lifts"
   add_foreign_key "lifts_rules", "rules"
+  add_foreign_key "passengers_tables", "accounts"
+  add_foreign_key "passengers_tables", "lifts"
 end
