@@ -47,11 +47,11 @@ ActiveRecord::Schema.define(version: 2018_10_23_180357) do
     t.index ["rule_id"], name: "index_lifts_rules_on_rule_id"
   end
 
-  create_table "passengers_tables", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "passengers", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "account_id"
     t.bigint "lift_id"
-    t.index ["account_id"], name: "index_passengers_tables_on_account_id"
-    t.index ["lift_id"], name: "index_passengers_tables_on_lift_id"
+    t.index ["account_id"], name: "index_passengers_on_account_id"
+    t.index ["lift_id"], name: "index_passengers_on_lift_id"
   end
 
   create_table "rules", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
@@ -64,6 +64,6 @@ ActiveRecord::Schema.define(version: 2018_10_23_180357) do
   add_foreign_key "drivers", "lifts"
   add_foreign_key "lifts_rules", "lifts"
   add_foreign_key "lifts_rules", "rules"
-  add_foreign_key "passengers_tables", "accounts"
-  add_foreign_key "passengers_tables", "lifts"
+  add_foreign_key "passengers", "accounts"
+  add_foreign_key "passengers", "lifts"
 end
