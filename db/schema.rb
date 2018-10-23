@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_173301) do
+ActiveRecord::Schema.define(version: 2018_10_23_180357) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "first_name"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 2018_10_23_173301) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "drivers", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "lift_id"
+    t.index ["account_id"], name: "index_drivers_on_account_id"
+    t.index ["lift_id"], name: "index_drivers_on_lift_id"
   end
 
   create_table "lifts", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
@@ -38,6 +45,13 @@ ActiveRecord::Schema.define(version: 2018_10_23_173301) do
     t.bigint "rule_id"
     t.index ["lift_id"], name: "index_lifts_rules_on_lift_id"
     t.index ["rule_id"], name: "index_lifts_rules_on_rule_id"
+  end
+
+  create_table "passengers_tables", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "lift_id"
+    t.index ["account_id"], name: "index_passengers_tables_on_account_id"
+    t.index ["lift_id"], name: "index_passengers_tables_on_lift_id"
   end
 
   create_table "rules", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
