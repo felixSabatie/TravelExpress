@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_172919) do
+ActiveRecord::Schema.define(version: 2018_10_23_173301) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "first_name"
@@ -33,10 +33,19 @@ ActiveRecord::Schema.define(version: 2018_10_23_172919) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "lifts_rules", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "lift_id"
+    t.bigint "rule_id"
+    t.index ["lift_id"], name: "index_lifts_rules_on_lift_id"
+    t.index ["rule_id"], name: "index_lifts_rules_on_rule_id"
+  end
+
   create_table "rules", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "lifts_rules", "lifts"
+  add_foreign_key "lifts_rules", "rules"
 end
