@@ -1,0 +1,12 @@
+@import '../../node_modules/materialize-css/sass/materialize';
+@import './colors';
+
+body {
+  background-color: $white;
+  #app {
+    color: $text-color;
+    h2 {
+      font-size: 30pt;
+    }
+  }  
+}
