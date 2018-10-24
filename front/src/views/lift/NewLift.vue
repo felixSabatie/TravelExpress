@@ -1,7 +1,7 @@
 <template>
   <div class="new-lift">
     <h2>Publier un trajet</h2>
-    <form>
+    <form @submit="sendForm">
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">place</i>
@@ -55,17 +55,17 @@
       <div class="row">
         <div class="input-field col s6">
           <i class="material-icons prefix">date_range</i>
-          <input id="arrival_date" type="text" class="datepicker" required>
+          <input id="arrival_date" type="text" class="datepicker" required :disabled="!departureIsValid">
           <label for="arrival_date">Arriver le...</label>
         </div>
         <div class="input-field col s6">
           <i class="material-icons prefix">watch_later</i>
-          <input id="arrival_time" type="text" class="timepicker" required>
+          <input id="arrival_time" type="text" class="timepicker" required :disabled="!departureIsValid">
           <label for="arrival_time">à...</label>
         </div>
       </div>
 
-      <button class="right btn" @click.prevent="sendForm">Valider</button>
+      <button class="right btn">Valider</button>
 
     </form>
   </div>
@@ -83,13 +83,26 @@
           car: "",
           capacity: "",
           price: "",
-          departure_date: {},
-          departure_hours: {},
-          departure_minutes: {},
-          arrival_date: {},
-          arrival_hours: {},
-          arrival_minutes: {}
+          departure_date: undefined,
+          departure_hours: undefined,
+          departure_minutes: undefined,
+          arrival_date: undefined,
+          arrival_hours: undefined,
+          arrival_minutes: undefined
         }
+      }
+    },
+    computed: {
+      departureIsValid() {
+        return this.lift.departure_date !== undefined
+            && this.lift.departure_hours !== undefined
+            && this.lift.departure_minutes !== undefined
+      }
+    },
+    watch: {
+      departureIsValid(newValidity, oldValidity) {
+        if(newValidity)
+          this.initArrivalDatePicker()
       }
     },
     mounted() {
@@ -101,37 +114,46 @@
       M.Datepicker.init(departureDatepicker, {
         format: 'dd/mm/yyyy',
         minDate: new Date(),
-        onSelect: newDate => {that.lift.departure_date = newDate}
-      });
-
-      let arrivalDatepicker = document.querySelectorAll('.datepicker#arrival_date');
-      M.Datepicker.init(arrivalDatepicker, {
-        format: 'dd/mm/yyyy',
-        minDate: new Date(),
-        onSelect: newDate => {that.lift.arrival_date = newDate}
+        onSelect: this.updateDepartureDate
       });
 
       let departureTimePicker = document.querySelectorAll('.timepicker#departure_time');
       M.Timepicker.init(departureTimePicker, {
         twelveHour: false,
-        onSelect: (newHours, newMinutes) => {
-          that.lift.departure_hours = newHours
-          that.lift.departure_minutes = newMinutes
-        }
+        onSelect: this.updateDepartureTime
       });
 
       let arrivalTimePicker = document.querySelectorAll('.timepicker#arrival_time');
       M.Timepicker.init(arrivalTimePicker, {
         twelveHour: false,
-        onSelect: (newHours, newMinutes) => {
-          that.lift.arrival_hours = newHours
-          that.lift.arrival_minutes = newMinutes
-        }
+        onSelect: this.updateArrivalTime
       });
     },
     methods: {
       sendForm() {
         console.log(this.lift)
+      },
+      updateDepartureDate(newDate) {
+        this.lift.departure_date = newDate
+      },
+      updateArrivalDate(newDate) {
+        this.lift.arrival_date = newDate
+      },
+      updateDepartureTime(newHours, newMinutes) {
+        this.lift.departure_hours = newHours
+        this.lift.departure_minutes = newMinutes
+      },
+      updateArrivalTime(newHours, newMinutes) {
+        this.lift.arrival_hours = newHours
+        this.lift.arrival_minutes = newMinutes
+      },
+      initArrivalDatePicker() {
+        let arrivalDatepicker = document.querySelectorAll('.datepicker#arrival_date');
+        M.Datepicker.init(arrivalDatepicker, {
+          format: 'dd/mm/yyyy',
+          minDate: this.lift.departure_date,
+          onSelect: this.updateArrivalDate
+        });
       }
     }
   }
