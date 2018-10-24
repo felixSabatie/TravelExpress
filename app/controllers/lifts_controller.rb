@@ -11,6 +11,15 @@ class LiftsController < ApplicationController
     render_json_with_includes(@lift)
   end
 
+  def create
+    lift = Lift.new(lift_params)
+    if lift.save
+      render_json_with_includes lift
+    else
+      render status: 422, json: {error: 'Lift is invalid'}
+    end
+  end
+
   private
 
   def set_lift
@@ -19,6 +28,11 @@ class LiftsController < ApplicationController
 
   def render_json_with_includes(data)
     render json: data, include: [:passengers, :rules, :drivers]
+  end
+
+  def lift_params
+    params.require(:lift).permit(:departure_address, :arrival_address, :car, :capacity, :price,
+                                 :departure_date, :arrival_date)
   end
 
 end
