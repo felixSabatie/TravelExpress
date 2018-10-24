@@ -33,7 +33,7 @@
           <label for="capacity">Nombre de personnes</label>
         </div>
         <div class="input-field col m6 s12">
-          <i class="material-icons prefix">euro_symbol</i>
+          <i class="material-icons prefix">attach_money</i>
           <input v-model.number="lift.price" id="price" type="number" min="0" class="validate" step="0.01" required>
           <label for="price">Prix demandé par personne</label>
         </div>
@@ -73,6 +73,8 @@
 
 <script>
   import M from 'materialize-css'
+  import axios from 'axios'
+  import {serverAddress} from '../../env'
 
   export default {
     data: () => {
@@ -131,7 +133,15 @@
     },
     methods: {
       sendForm() {
-        console.log(this.lift)
+        this.lift.departure_date.setHours(this.lift.departure_hours)
+        this.lift.departure_date.setMinutes(this.lift.departure_minutes)
+        this.lift.arrival_date.setHours(this.lift.arrival_hours)
+        this.lift.arrival_date.setMinutes(this.lift.arrival_minutes)
+        axios.post(`${serverAddress}/api/lifts`, this.lift).then(data => {
+          console.log(data)
+        }).catch(error => {
+          console.error(error)
+        })
       },
       updateDepartureDate(newDate) {
         this.lift.departure_date = newDate
