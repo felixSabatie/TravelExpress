@@ -1,18 +1,26 @@
 <template>
   <div class="new-lift">
     <h2>Publier un trajet</h2>
-    <form @submit="sendForm">
+    <form @submit.prevent="sendForm">
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col m4 s12">
           <i class="material-icons prefix">place</i>
+          <input v-model="lift.departure_city" id="departure_city" type="text" class="validate" required>
+          <label for="departure_city">Ville de départ</label>
+        </div>
+        <div class="input-field col m8 s12">
           <input v-model="lift.departure_address" id="departure_address" type="text" class="validate" required>
           <label for="departure_address">Adresse de départ</label>
         </div>
       </div>
 
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col m4 s12">
           <i class="material-icons prefix">flag</i>
+          <input v-model="lift.arrival_city" id="arrival_city" type="text" class="validate" required>
+          <label for="arrival_city">Ville d'arrivée</label>
+        </div>
+        <div class="input-field col m8 s12">
           <input v-model="lift.arrival_address" id="arrival_address" type="text" class="validate" required>
           <label for="arrival_address">Adresse d'arrivée</label>
         </div>
@@ -82,6 +90,8 @@
         lift: {
           departure_address: "",
           arrival_address: "",
+          departure_city: "",
+          arrival_city: "",
           car: "",
           capacity: "",
           price: "",
