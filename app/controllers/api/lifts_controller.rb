@@ -14,6 +14,7 @@ module Api
 
     def create
       lift = Lift.new(lift_params)
+      # TODO add logged in user as driver
       if lift.save
         render_json_with_includes lift
       else
