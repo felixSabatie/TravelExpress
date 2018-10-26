@@ -100,8 +100,10 @@
           departure_minutes: undefined,
           arrival_date: undefined,
           arrival_hours: undefined,
-          arrival_minutes: undefined
-        }
+          arrival_minutes: undefined,
+          rules: []
+        },
+        rules: []
       }
     },
     computed: {
@@ -118,30 +120,35 @@
       }
     },
     mounted() {
-      M.updateTextFields()
+      this.initMaterializeStuff()
 
-      let that = this
-
-      let departureDatepicker = document.querySelectorAll('.datepicker#departure_date');
-      M.Datepicker.init(departureDatepicker, {
-        format: 'dd/mm/yyyy',
-        minDate: new Date(),
-        onSelect: this.updateDepartureDate
-      });
-
-      let departureTimePicker = document.querySelectorAll('.timepicker#departure_time');
-      M.Timepicker.init(departureTimePicker, {
-        twelveHour: false,
-        onSelect: this.updateDepartureTime
-      });
-
-      let arrivalTimePicker = document.querySelectorAll('.timepicker#arrival_time');
-      M.Timepicker.init(arrivalTimePicker, {
-        twelveHour: false,
-        onSelect: this.updateArrivalTime
-      });
+      axios.get(`${serverAddress}/api/rules`).then(response => {
+        this.rules = response.data
+      })
     },
     methods: {
+      initMaterializeStuff() {
+        M.updateTextFields()
+
+        let departureDatepicker = document.querySelectorAll('.datepicker#departure_date');
+        M.Datepicker.init(departureDatepicker, {
+          format: 'dd/mm/yyyy',
+          minDate: new Date(),
+          onSelect: this.updateDepartureDate
+        });
+
+        let departureTimePicker = document.querySelectorAll('.timepicker#departure_time');
+        M.Timepicker.init(departureTimePicker, {
+          twelveHour: false,
+          onSelect: this.updateDepartureTime
+        });
+
+        let arrivalTimePicker = document.querySelectorAll('.timepicker#arrival_time');
+        M.Timepicker.init(arrivalTimePicker, {
+          twelveHour: false,
+          onSelect: this.updateArrivalTime
+        });
+      },
       sendForm() {
         this.lift.departure_date.setHours(this.lift.departure_hours)
         this.lift.departure_date.setMinutes(this.lift.departure_minutes)
