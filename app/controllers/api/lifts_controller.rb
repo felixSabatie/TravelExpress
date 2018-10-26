@@ -14,8 +14,13 @@ module Api
 
     def create
       lift = Lift.new(lift_params)
+      p params(:lift)
+      rules = Rule.find params(:lift).permit(:rules)
+      p rules
       # TODO add logged in user as driver
       if lift.save
+        lift.rules << rules
+        p lift
         render_json_with_includes lift
       else
         render status: 422, json: {error: 'Lift is invalid'}

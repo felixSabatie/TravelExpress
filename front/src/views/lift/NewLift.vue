@@ -73,6 +73,16 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="input-field col s12">
+          <select multiple v-model="lift.rules">
+            <option value="" disabled selected>Choisir les règles de trajet</option>
+            <option v-for="rule in rules" :value="rule">{{rule.name}}</option>
+          </select>
+          <label>Règles de trajet</label>
+        </div>
+      </div>
+
       <button class="right btn">Valider</button>
 
     </form>
@@ -120,10 +130,11 @@
       }
     },
     mounted() {
-      this.initMaterializeStuff()
-
       axios.get(`${serverAddress}/api/rules`).then(response => {
         this.rules = response.data
+        this.$nextTick(() => {
+          this.initMaterializeStuff()
+        })
       })
     },
     methods: {
@@ -148,6 +159,9 @@
           twelveHour: false,
           onSelect: this.updateArrivalTime
         });
+
+        let select = document.querySelectorAll('select');
+        M.FormSelect.init(select);
       },
       sendForm() {
         this.lift.departure_date.setHours(this.lift.departure_hours)
