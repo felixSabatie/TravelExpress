@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Rule.create([
+                 {name: "Pas d'animaux"},
+                 {name: "Non fumeur"},
+                 {name: "Pas de gros bagages"},
+                 {name: "Pas de support à vélo"},
+                 {name: "Pas de support à ski"},
+             ])
