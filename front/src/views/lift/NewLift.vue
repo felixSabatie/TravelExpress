@@ -75,7 +75,7 @@
 
       <div class="row">
         <div class="input-field col s12">
-          <select multiple v-model="lift.rules">
+          <select multiple v-model="selectedRules">
             <option value="" disabled selected>Choisir les règles de trajet</option>
             <option v-for="rule in rules" :value="rule">{{rule.name}}</option>
           </select>
@@ -110,10 +110,10 @@
           departure_minutes: undefined,
           arrival_date: undefined,
           arrival_hours: undefined,
-          arrival_minutes: undefined,
-          rules: []
+          arrival_minutes: undefined
         },
-        rules: []
+        rules: [],
+        selectedRules: []
       }
     },
     computed: {
@@ -168,7 +168,10 @@
         this.lift.departure_date.setMinutes(this.lift.departure_minutes)
         this.lift.arrival_date.setHours(this.lift.arrival_hours)
         this.lift.arrival_date.setMinutes(this.lift.arrival_minutes)
-        axios.post(`${serverAddress}/api/lifts`, this.lift).then(data => {
+        axios.post(`${serverAddress}/api/lifts`, {
+          lift: this.lift,
+          rules: this.selectedRules
+        }).then(data => {
           console.log(data)
         }).catch(error => {
           console.error(error)
