@@ -18,7 +18,6 @@ module Api
       lift.rules = rules
       # TODO add logged in user as driver
       if lift.save
-        # p lift
         render_json_with_includes lift
       else
         render status: 422, json: {error: 'Lift is invalid'}

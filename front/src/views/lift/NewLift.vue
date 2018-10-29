@@ -77,7 +77,7 @@
         <div class="input-field col s12">
           <select multiple v-model="selectedRules">
             <option value="" disabled selected>Choisir les règles de trajet</option>
-            <option v-for="rule in rules" :value="rule">{{rule.name}}</option>
+            <option v-for="rule in rules" :value="rule.id">{{rule.name}}</option>
           </select>
           <label>Règles de trajet</label>
         </div>
