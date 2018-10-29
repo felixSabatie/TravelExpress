@@ -75,13 +75,57 @@
             </select>
             <label>Nombre de places</label>
           </div>
-          <button class="btn">Réserver</button>
+          <button class="btn" @click="openModal">Réserver</button>
         </div>
       </div>
     </div>
     <div v-else>
       <Unfound />
     </div>
+
+    <Modal v-if="showModal" class="modal" @close="showModal = false">
+      <div slot="header">
+        <h2>Réserver le trajet</h2>
+      </div>
+      <div slot="body">
+        <div class="infos">
+          <p class="price">{{lift.departure_city}} -> {{lift.arrival_city}}</p>
+          <p class="price">{{seats}} place(s)</p>
+          <p class="price">Total de la commande : ${{totalPrice}}</p>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="card-name" type="text" class="validate" required>
+            <label for="card-name">Nom sur la carte</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="card-number" type="text" class="validate" required>
+            <label for="card-number">Numéro de carte</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s8">
+            <input id="expiration-date" type="text" class="validate" required>
+            <label for="expiration-date">Date d'expiration</label>
+          </div>
+          <div class="input-field col s4">
+            <input id="security-code" type="text" class="validate" required>
+            <label for="security-code">Sécurité</label>
+          </div>
+        </div>
+      </div>
+      <div slot="footer">
+        <button class="btn right" @click="paymentLoading = true">
+          <span v-if="paymentLoading" class="accepted-payment">
+            <i class="material-icons">check</i>
+            <span>Paiement accepté</span>
+          </span>
+          <span v-else>Valider la réservation</span>
+        </button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -92,13 +136,17 @@
   import Loader from '../Loader'
   import moment from 'moment'
   import M from 'materialize-css'
+  import Modal from '../Modal'
 
   export default {
     data() {
       return {
         lift: undefined,
         loading: true,
-        seats: 1
+        seats: 1,
+        totalPrice: undefined,
+        showModal: false,
+        paymentLoading: false,
       }
     },
     computed: {
@@ -107,7 +155,7 @@
           return this.lift.capacity - this.lift.passengers.length
       }
     },
-    components: { Unfound, Loader },
+    components: { Unfound, Loader, Modal },
     mounted() {
       let liftId = Number(this.$route.params.id)
       if(!isNaN(liftId)) {
@@ -134,6 +182,10 @@
       initSelect() {
         let elems = document.querySelectorAll('select');
         M.FormSelect.init(elems);
+      },
+      openModal() {
+        this.totalPrice = this.seats * this.lift.price
+        this.showModal = true
       }
     }
   }
@@ -205,4 +257,21 @@
       }
     }
   }
+
+  .modal {
+    .infos {
+      text-align: center;
+      .price {
+        font-weight: bold;
+      }
+    }
+    .accepted-payment {
+      display: flex;
+      align-items: center;
+      & > *:first-child {
+        margin-right: 5px;
+      }
+    }
+  }
+
 </style>
