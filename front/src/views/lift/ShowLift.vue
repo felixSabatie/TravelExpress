@@ -61,6 +61,10 @@
             {{nbPlacesLeft}} places restantes
           </div>
         </div>
+
+        <div class="rules">
+          <p v-for="rule in lift.rules">{{rule.name}}</p>
+        </div>
       </div>
       <div class="reservation">
         <div class="price"><span class="price-text">Prix par place : </span><span class="price-number">${{lift.price}}</span></div>
@@ -159,6 +163,12 @@
       span {
         margin-left: 10px;
       }
+    }
+
+    .rules {
+      text-align: center;
+      font-weight: bold;
+      color: $accent-color;
     }
 
     .reservation {
