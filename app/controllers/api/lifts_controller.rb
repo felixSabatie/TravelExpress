@@ -14,6 +14,8 @@ module Api
 
     def create
       lift = Lift.new(lift_params)
+      rules = Rule.find params.require(:rules)
+      lift.rules = rules
       # TODO add logged in user as driver
       if lift.save
         render_json_with_includes lift
@@ -34,7 +36,7 @@ module Api
 
     def lift_params
       params.require(:lift).permit(:departure_address, :arrival_address, :car, :capacity, :price,
-                                   :departure_date, :arrival_date)
+                                   :departure_date, :arrival_date, :departure_city, :arrival_city)
     end
 
   end

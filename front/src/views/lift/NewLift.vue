@@ -1,18 +1,26 @@
 <template>
   <div class="new-lift">
     <h2>Publier un trajet</h2>
-    <form @submit="sendForm">
+    <form @submit.prevent="sendForm">
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col m4 s12">
           <i class="material-icons prefix">place</i>
+          <input v-model="lift.departure_city" id="departure_city" type="text" class="validate" required>
+          <label for="departure_city">Ville de départ</label>
+        </div>
+        <div class="input-field col m8 s12">
           <input v-model="lift.departure_address" id="departure_address" type="text" class="validate" required>
           <label for="departure_address">Adresse de départ</label>
         </div>
       </div>
 
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col m4 s12">
           <i class="material-icons prefix">flag</i>
+          <input v-model="lift.arrival_city" id="arrival_city" type="text" class="validate" required>
+          <label for="arrival_city">Ville d'arrivée</label>
+        </div>
+        <div class="input-field col m8 s12">
           <input v-model="lift.arrival_address" id="arrival_address" type="text" class="validate" required>
           <label for="arrival_address">Adresse d'arrivée</label>
         </div>
@@ -65,6 +73,16 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="input-field col s12">
+          <select multiple v-model="selectedRules">
+            <option value="" disabled selected>Choisir les règles de trajet</option>
+            <option v-for="rule in rules" :value="rule.id">{{rule.name}}</option>
+          </select>
+          <label>Règles de trajet</label>
+        </div>
+      </div>
+
       <button class="right btn">Valider</button>
 
     </form>
@@ -82,6 +100,8 @@
         lift: {
           departure_address: "",
           arrival_address: "",
+          departure_city: "",
+          arrival_city: "",
           car: "",
           capacity: "",
           price: "",
@@ -91,7 +111,9 @@
           arrival_date: undefined,
           arrival_hours: undefined,
           arrival_minutes: undefined
-        }
+        },
+        rules: [],
+        selectedRules: []
       }
     },
     computed: {
@@ -108,37 +130,49 @@
       }
     },
     mounted() {
-      M.updateTextFields()
-
-      let that = this
-
-      let departureDatepicker = document.querySelectorAll('.datepicker#departure_date');
-      M.Datepicker.init(departureDatepicker, {
-        format: 'dd/mm/yyyy',
-        minDate: new Date(),
-        onSelect: this.updateDepartureDate
-      });
-
-      let departureTimePicker = document.querySelectorAll('.timepicker#departure_time');
-      M.Timepicker.init(departureTimePicker, {
-        twelveHour: false,
-        onSelect: this.updateDepartureTime
-      });
-
-      let arrivalTimePicker = document.querySelectorAll('.timepicker#arrival_time');
-      M.Timepicker.init(arrivalTimePicker, {
-        twelveHour: false,
-        onSelect: this.updateArrivalTime
-      });
+      axios.get(`${serverAddress}/api/rules`).then(response => {
+        this.rules = response.data
+        this.$nextTick(() => {
+          this.initMaterializeStuff()
+        })
+      })
     },
     methods: {
+      initMaterializeStuff() {
+        M.updateTextFields()
+
+        let departureDatepicker = document.querySelectorAll('.datepicker#departure_date');
+        M.Datepicker.init(departureDatepicker, {
+          format: 'dd/mm/yyyy',
+          minDate: new Date(),
+          onSelect: this.updateDepartureDate
+        });
+
+        let departureTimePicker = document.querySelectorAll('.timepicker#departure_time');
+        M.Timepicker.init(departureTimePicker, {
+          twelveHour: false,
+          onSelect: this.updateDepartureTime
+        });
+
+        let arrivalTimePicker = document.querySelectorAll('.timepicker#arrival_time');
+        M.Timepicker.init(arrivalTimePicker, {
+          twelveHour: false,
+          onSelect: this.updateArrivalTime
+        });
+
+        let select = document.querySelectorAll('select');
+        M.FormSelect.init(select);
+      },
       sendForm() {
         this.lift.departure_date.setHours(this.lift.departure_hours)
         this.lift.departure_date.setMinutes(this.lift.departure_minutes)
         this.lift.arrival_date.setHours(this.lift.arrival_hours)
         this.lift.arrival_date.setMinutes(this.lift.arrival_minutes)
-        axios.post(`${serverAddress}/api/lifts`, this.lift).then(data => {
-          console.log(data)
+        axios.post(`${serverAddress}/api/lifts`, {
+          lift: this.lift,
+          rules: this.selectedRules
+        }).then(response => {
+          this.$router.push({name: 'show_lift', params: {id: response.data.id}})
         }).catch(error => {
           console.error(error)
         })
