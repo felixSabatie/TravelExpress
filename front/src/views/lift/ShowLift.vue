@@ -117,10 +117,10 @@
         </div>
       </div>
       <div slot="footer">
-        <button class="btn right" @click="paymentLoading = true">
-          <span v-if="paymentLoading" class="accepted-payment">
+        <button class="btn right" @click="sendReservation">
+          <span v-if="paymentDone" class="accepted-payment">
             <i class="material-icons">check</i>
-            <span>Paiement accepté</span>
+            <span>Réservation validée</span>
           </span>
           <span v-else>Valider la réservation</span>
         </button>
@@ -146,7 +146,7 @@
         seats: 1,
         totalPrice: undefined,
         showModal: false,
-        paymentLoading: false,
+        paymentDone: false,
       }
     },
     computed: {
@@ -186,6 +186,15 @@
       openModal() {
         this.totalPrice = this.seats * this.lift.price
         this.showModal = true
+      },
+      sendReservation() {
+        axios.post(`${serverAddress}/api/lifts/${this.lift.id}/reservations`, {
+          seats: this.seats
+        }).then(response => {
+          this.paymentDone = true
+        }).catch(err => {
+          console.error(err);
+        })
       }
     }
   }
