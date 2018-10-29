@@ -171,8 +171,8 @@
         axios.post(`${serverAddress}/api/lifts`, {
           lift: this.lift,
           rules: this.selectedRules
-        }).then(data => {
-          console.log(data)
+        }).then(response => {
+          this.$router.push({name: 'show_lift', params: {id: response.data.id}})
         }).catch(error => {
           console.error(error)
         })
