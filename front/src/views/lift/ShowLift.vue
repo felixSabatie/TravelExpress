@@ -63,7 +63,7 @@
         </div>
 
         <div class="rules">
-          <p v-for="rule in lift.rules">{{rule.name}}</p>
+          <p v-for="rule in lift.rules" :key="rule.id">{{rule.name}}</p>
         </div>
       </div>
       <div class="reservation">
@@ -71,7 +71,7 @@
         <div class="reservation-form">
           <div class="input-field select">
             <select v-model="seats">
-              <option v-for="i in (1, nbPlacesLeft)" :value="i">{{i}} place{{i > 1 ? 's' : ''}}</option>
+              <option v-for="i in (1, nbPlacesLeft)" :value="i" :key="i">{{i}} place{{i > 1 ? 's' : ''}}</option>
             </select>
             <label>Nombre de places</label>
           </div>
@@ -169,6 +169,7 @@
             this.initSelect()
           })
         }).catch(error => {
+          console.error(error)
           this.loading = false
         })
       } else {
@@ -190,7 +191,7 @@
       sendReservation() {
         axios.post(`${serverAddress}/api/lifts/${this.lift.id}/reservations`, {
           seats: this.seats
-        }).then(response => {
+        }).then(() => {
           this.paymentDone = true
         }).catch(err => {
           console.error(err);
@@ -208,12 +209,12 @@
     h2 {
       text-align: center;
     }
-    
+
     .label {
       color: $grey-text-color;
       font-weight: bold;
       text-align: right;
-      
+
       @media screen and (max-width: 601px) {
         text-align: left;
       }
