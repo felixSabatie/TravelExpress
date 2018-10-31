@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import NewLift from './views/lift/NewLift'
 import ShowLift from './views/lift/ShowLift'
+import Login from './views/account/Login'
+import Register from './views/account/Register'
 
 Vue.use(Router)
 
@@ -18,6 +20,16 @@ export default new Router({
       path: '/lifts/:id',
       name: 'show_lift',
       component: ShowLift
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,
     }
   ]
 })
