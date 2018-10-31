@@ -27,6 +27,9 @@
         </div>
       </div>
       <button class="right btn">Valider</button>
+      <router-link v-if="!this.isAlreadyRegistered" to="Login">Se connecter</router-link>
+      <router-link v-else to="Register">S'inscrire</router-link>
+
     </form>
   </div>
 </template>
