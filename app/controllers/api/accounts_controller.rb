@@ -1,13 +1,13 @@
 module Api
   class AccountsController < ApplicationController
-
-    before_action :set_account, only: [:show]
+    before_action :authenticate_account, :set_account, only: [:show]
 
     def show
       render_json_with_includes(@account)
     end
 
     def create
+      account_params = params.require(:account).permit(:first_name, :last_name, :email, :password, :password_confirmation)
       account = Account.new(account_params)
       if account.save
         render_json_with_includes account
@@ -25,10 +25,5 @@ module Api
     def render_json_with_includes(data)
       render json: data, include: [:drivers, :passengers]
     end
-
-    def account_params
-      params.require(:account).permit(:first_name, :last_name, :email, :password)
-    end
-
   end
 end

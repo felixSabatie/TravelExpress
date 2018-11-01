@@ -1,12 +1,12 @@
 <template>
   <div class="login">
     <h2>Se connecter</h2>
-    <authentification-form :isAlreadyRegistered="true" ></authentification-form>
+    <Authentification-form :isAlreadyRegistered="true" ></Authentification-form>
   </div>
 </template>
 
 <script>
-  import AuthentificationForm from "./authentificationForm";
+  import AuthentificationForm from "./AuthentificationForm";
   export default {
     name: "Login",
     components: {AuthentificationForm}
