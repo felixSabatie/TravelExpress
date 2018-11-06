@@ -1,6 +1,6 @@
 module Api
   class LiftsController < ApplicationController
-
+    before_action :authenticate_account, only: [:create]
     before_action :set_lift, only: [:show]
 
     def index
