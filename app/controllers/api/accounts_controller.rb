@@ -28,7 +28,7 @@ module Api
     end
 
     def render_json_with_includes(data)
-      render json: data, include: [:drivers, :passengers], except: [:password_digest]
+      render json: data, include: [:lifts, :passengers], except: [:password_digest]
     end
   end
 end
