@@ -1,6 +1,7 @@
 module Api
   class AccountsController < ApplicationController
-    before_action :authenticate_account, :set_account, only: [:show]
+    before_action :authenticate_account, only: [:current]
+    before_action :set_account, only: [:show]
 
     def show
       render_json_with_includes(@account)

@@ -91,7 +91,7 @@
 
 <script>
   import M from 'materialize-css'
-  import axios from 'axios'
+  import axios from '../../axios-wrapper'
   import {serverAddress} from '../../env'
 
   export default {
