@@ -5,12 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    account_token: String,
+    account_token: "",
     account: {
-      id: Number,
-      first_name: String,
-      last_name: String,
-      email: String,
+      id: null,
+      first_name: "",
+      last_name: "",
+      email: "",
     },
   },
 
@@ -30,9 +30,11 @@ export default new Vuex.Store({
 
   actions: {
     setToken: (store, token) => {
+      localStorage.setItem('user-token', token)
       store.commit('SET_TOKEN', token)
     },
     setCurrentAccount: (store, account) => {
+      localStorage.setItem('user-account', JSON.stringify(account))
       store.commit('SET_ACCOUNT', account)
     }
   }

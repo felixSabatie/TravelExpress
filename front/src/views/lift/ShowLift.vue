@@ -68,7 +68,7 @@
       </div>
       <div class="reservation">
         <div class="price"><span class="price-text">Prix par place : </span><span class="price-number">${{lift.price}}</span></div>
-        <div class="reservation-form">
+        <div class="reservation-form" v-if="currentUser.id !== lift.driver.id">
           <div class="input-field select">
             <select v-model="seats">
               <option v-for="i in (1, nbPlacesLeft)" :value="i" :key="i">{{i}} place{{i > 1 ? 's' : ''}}</option>
@@ -137,6 +137,7 @@
   import moment from 'moment'
   import M from 'materialize-css'
   import Modal from '../Modal'
+  import {mapGetters} from 'vuex'
 
   export default {
     data() {
@@ -153,7 +154,7 @@
       nbPlacesLeft() {
         if(this.lift !== undefined)
           return this.lift.capacity - this.lift.passengers.length
-      }
+      }, ...mapGetters({currentUser: 'account'})
     },
     components: { Unfound, Loader, Modal },
     mounted() {
