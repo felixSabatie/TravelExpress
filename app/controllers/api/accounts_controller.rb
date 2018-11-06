@@ -10,10 +10,20 @@ module Api
       account_params = params.require(:account).permit(:first_name, :last_name, :email, :password, :password_confirmation)
       account = Account.new(account_params)
       if account.save
-        render_json_with_includes account
+        render_json_with_includes(account)
       else
         render status: 422, json: {error: 'Account is invalid'}
       end
+    end
+
+    def current
+      base_account = current_account
+      account = {
+          :first_name => base_account.first_name,
+          :last_name => base_account.last_name,
+          :email => base_account.email
+      }
+      render_json_with_includes(account)
     end
 
     private

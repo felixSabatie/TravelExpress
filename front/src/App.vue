@@ -22,6 +22,12 @@
             link: {
               name: 'new_lift'
             }
+          },
+          {
+            name: 'Se connecter',
+            link: {
+              name: 'login'
+            }
           }
         ]
       }

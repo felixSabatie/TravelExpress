@@ -9,7 +9,4 @@ class Account < ApplicationRecord
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create
 
   has_secure_password
-  # validates :password, presence: true
-  # validates_confirmation_of :password
-  # validates_presence_of :password_confirmation, if: :password_changed?
 end
