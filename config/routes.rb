@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   #   account: show, create, update
 
   namespace :api do
-    post 'account_token' => 'account_token#create'
-    get 'accounts/current' => 'accounts#current'
+    post '/account_token' => 'account_token#create'
+    get '/accounts/current' => 'accounts#current'
     resources :lifts, except: [:new, :edit]
+    post '/lifts/:id/reservations' => 'lifts#add_reservation'
     resources :rules, only: :index
     resources :accounts, only: [:show, :create, :update]
   end

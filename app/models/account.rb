@@ -1,6 +1,8 @@
 class Account < ApplicationRecord
   has_many :lifts
-  has_and_belongs_to_many :passengers, :class_name => 'Lift', :join_table => 'passengers'
+
+  has_many :passengers
+  has_many :lifts, through: :passengers
 
   validates :first_name, presence: true
   validates :last_name, presence: true

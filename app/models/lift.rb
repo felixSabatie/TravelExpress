@@ -2,7 +2,9 @@ class Lift < ApplicationRecord
   has_and_belongs_to_many :rules
 
   belongs_to :driver, :class_name => :Account, :foreign_key => "account_id"
-  has_and_belongs_to_many :passengers, :class_name => 'Account', :join_table => 'passengers'
+
+  has_many :passengers
+  has_many :accounts, through: :passengers
 
   validates :departure_address, presence: true
   validates :arrival_address, presence: true

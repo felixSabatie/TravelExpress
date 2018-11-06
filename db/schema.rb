@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_06_211429) do
+ActiveRecord::Schema.define(version: 2018_11_06_230401) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "first_name"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2018_11_06_211429) do
   create_table "passengers", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "account_id"
     t.bigint "lift_id"
+    t.integer "seats"
     t.index ["account_id"], name: "index_passengers_on_account_id"
     t.index ["lift_id"], name: "index_passengers_on_lift_id"
   end

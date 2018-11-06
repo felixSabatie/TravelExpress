@@ -1,6 +1,6 @@
 module Api
   class LiftsController < ApplicationController
-    before_action :authenticate_account, only: [:create]
+    before_action :authenticate_account, only: [:create, :add_reservation]
     before_action :set_lift, only: [:show]
 
     def index
@@ -24,6 +24,19 @@ module Api
       end
     end
 
+    def add_reservation
+      lift = Lift.find params[:id]
+      nb_seats =  params.require(:seats)
+      passenger = Passenger.new(seats: nb_seats)
+      passenger.account = current_account
+      passenger.lift = lift
+      if passenger.save
+        render json: "success"
+      else
+        render status: 422, json: {error: 'Reservation is invalid'}
+      end
+    end
+
     private
 
     def set_lift
@@ -31,7 +44,7 @@ module Api
     end
 
     def render_json_with_includes(data)
-      render json: data, include: [:passengers, :rules, :driver]
+      render json: data.to_json(include: [{passengers: {include: :account}}, :rules, :driver])
     end
 
     def lift_params

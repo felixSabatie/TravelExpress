@@ -153,6 +153,7 @@
     computed: {
       nbPlacesLeft() {
         if(this.lift !== undefined)
+          // TODO handle number of seats
           return this.lift.capacity - this.lift.passengers.length
       }, ...mapGetters({currentUser: 'account'})
     },
