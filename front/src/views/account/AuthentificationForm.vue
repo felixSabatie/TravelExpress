@@ -48,7 +48,7 @@
   import axios from '../../axios-wrapper'
   import {serverAddress} from '../../env'
   import store from '../../store'
-  import Vuex from 'vuex'
+  import {mapActions} from 'vuex'
 
   export default {
     store: store,
@@ -67,7 +67,7 @@
       isAlreadyRegistered: Boolean
     },
     methods: {
-      ...Vuex.mapActions([
+      ...mapActions([
         'setToken',
         'setCurrentAccount'
       ]),

@@ -130,7 +130,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from '../../axios-wrapper'
   import {serverAddress} from '../../env'
   import Unfound from '../Unfound'
   import Loader from '../Loader'

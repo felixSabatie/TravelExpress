@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     account_token: String,
     account: {
+      id: Number,
       first_name: String,
       last_name: String,
       email: String,
