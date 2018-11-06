@@ -22,7 +22,7 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">lock</i>
-          <input v-model="account.password" id="password" type="text" min="6" class="validate"
+          <input v-model="account.password" id="password" type="password" min="6" class="validate"
                  required>
           <label for="password">Mot de passe</label>
         </div>
@@ -30,7 +30,7 @@
       <div v-if="!this.isAlreadyRegistered" class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">verified_user</i>
-          <input v-model="account.password_confirmation" id="password_confirmation" type="text"
+          <input v-model="account.password_confirmation" id="password_confirmation" type="password"
                  min="6" class="validate" required>
           <label for="password">Confirmer votre mot de passe</label>
         </div>
