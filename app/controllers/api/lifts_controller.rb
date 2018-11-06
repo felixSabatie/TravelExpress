@@ -16,7 +16,7 @@ module Api
       lift = Lift.new(lift_params)
       rules = Rule.find params.require(:rules)
       lift.rules = rules
-      # TODO add logged in user as driver
+      lift.driver = current_account
       if lift.save
         render_json_with_includes lift
       else
@@ -27,11 +27,11 @@ module Api
     private
 
     def set_lift
-      @lift = Lift.includes([:drivers, :passengers, :rules]).find(params[:id])
+      @lift = Lift.includes([:driver, :passengers, :rules]).find(params[:id])
     end
 
     def render_json_with_includes(data)
-      render json: data, include: [:passengers, :rules, :drivers]
+      render json: data, include: [:passengers, :rules, :driver]
     end
 
     def lift_params
