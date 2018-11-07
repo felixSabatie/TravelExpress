@@ -3,18 +3,20 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const defaultState = {
-  account_token: "",
-  account: {
-    id: null,
-    first_name: "",
-    last_name: "",
-    email: "",
-  },
+const getDefaultState = () => {
+  return {
+    account_token: "",
+    account: {
+      id: null,
+      first_name: "",
+      last_name: "",
+      email: "",
+    },
+  }
 }
 
 export default new Vuex.Store({
-  state: defaultState,
+  state: getDefaultState(),
 
   mutations: {
     SET_TOKEN: (state, token) => {
@@ -23,6 +25,13 @@ export default new Vuex.Store({
     SET_ACCOUNT: (state, account) => {
       state.account = account;
     },
+    RESET: (state) => {
+      const s = getDefaultState()
+      Object.keys(s).forEach(key => {
+        console.log(state[key], s[key])
+        state[key] = s[key]
+      })
+    }
   },
 
   getters: {
@@ -42,7 +51,7 @@ export default new Vuex.Store({
     disconnect: (store) => {
       localStorage.removeItem('user-account')
       localStorage.removeItem('user-token')
-      store.replaceState(defaultState)
+      store.commit('RESET')
     }
   }
 })
