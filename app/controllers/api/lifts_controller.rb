@@ -14,8 +14,11 @@ module Api
 
     def create
       lift = Lift.new(lift_params)
-      rules = Rule.find params.require(:rules)
-      lift.rules = rules
+      rules = Rule.find params[:rules]
+      p rules
+      if rules != nil
+        lift.rules = rules
+      end
       lift.driver = current_account
       if lift.save
         render_json_with_includes lift
