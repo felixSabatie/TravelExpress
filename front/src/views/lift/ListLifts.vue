@@ -1,6 +1,6 @@
 <template>
   <div class="listLifts">
-    <div class="container">
+    <!--<div class="container">-->
       <!--v-for "item in items"-->
       <div class="section">
         <Lift></Lift>
@@ -17,7 +17,7 @@
       <div class="section">
         <Lift></Lift>
       </div>
-    </div>
+    <!--</div>-->
   </div>
 </template>
 

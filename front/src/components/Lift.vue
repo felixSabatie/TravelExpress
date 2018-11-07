@@ -33,6 +33,14 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss">
+  @import '../styles/colors';
+
+  .lift {
+    display: flex;
+    flex-direction: row;
+    align-items : center;
+  }
+
 
 </style>

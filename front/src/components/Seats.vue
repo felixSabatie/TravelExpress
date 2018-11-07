@@ -21,6 +21,12 @@
 
 <style lang="scss">
   @import '../styles/colors';
+
+  .seats{
+    display: flex;
+    flex-direction: row;
+  }
+
   .takenSeats{
     color: #909999;
   }

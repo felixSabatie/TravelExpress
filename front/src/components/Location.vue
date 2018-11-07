@@ -18,6 +18,12 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss">
+  @import '../styles/colors';
+
+  .location{
+    text-align : center;
+  }
+
 
 </style>
