@@ -68,6 +68,12 @@
           <p v-for="rule in lift.rules" :key="rule.id">{{rule.name}}</p>
         </div>
       </div>
+
+      <div class="driver">
+        <p>Conducteur</p>
+        <LiftAccount :account="lift.driver" />
+      </div>
+
       <div class="reservation">
         <div class="price"><span class="price-text">Prix par place : </span><span class="price-number">${{lift.price}}</span></div>
         <div class="reservation-form" v-if="displayReservationForm">
@@ -79,6 +85,12 @@
           </div>
           <button class="btn" @click="openModal">Réserver</button>
         </div>
+      </div>
+
+      <div class="passengers" v-if="lift.passengers.length > 0">
+        <p>Passagers</p>
+        <LiftAccount v-for="passenger in lift.passengers" :account="passenger.account"
+                     :additional-info="'(' + getNbSeatsReserved(passenger.account_id) + ' places)'" />
       </div>
     </div>
     <div v-else>
@@ -140,8 +152,10 @@
   import M from 'materialize-css'
   import Modal from '../Modal'
   import {mapGetters} from 'vuex'
+  import LiftAccount from '../../components/LiftAccount'
 
   export default {
+    components: { Unfound, Loader, Modal, LiftAccount },
     data() {
       return {
         lift: undefined,
@@ -172,7 +186,6 @@
       },
       ...mapGetters({currentUser: 'account'})
     },
-    components: { Unfound, Loader, Modal },
     mounted() {
       let liftId = Number(this.$route.params.id)
       if(!isNaN(liftId)) {
@@ -225,6 +238,7 @@
   @import '../../styles/colors';
 
   .lift-container {
+    padding-bottom: 20px;
 
     .title {
       text-align: center;
@@ -289,6 +303,11 @@
           flex: 1;
         }
       }
+    }
+
+    .driver, .passengers {
+      max-width: 500px;
+      margin: 5px auto;
     }
   }
 
