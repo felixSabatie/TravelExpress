@@ -4,7 +4,9 @@
       <Loader />
     </div>
     <div v-else-if="lift !== undefined" class="lift-container">
-      <h2>Trajet de {{lift.departure_city}} à {{lift.arrival_city}}</h2>
+      <h2 class="title">Trajet de {{lift.departure_city}} à {{lift.arrival_city}}</h2>
+      <p class="info" v-if="currentUserIsDriver">Vous êtes le conducteur de ce trajet</p>
+      <p class="info" v-if="currentUserIsPassenger">Vous avez réservé {{getNbSeatsReserved(currentUser.id)}} places sur ce trajet</p>
       <div class="infos">
         <div class="row">
           <div class="col m5 s12 label">
@@ -209,8 +211,11 @@
         }).then(() => {
           this.paymentDone = true
         }).catch(err => {
-          console.error(err);
+          console.error(err)
         })
+      },
+      getNbSeatsReserved(accountId) {
+        return this.lift.passengers.find(passenger => passenger.account_id === accountId).seats
       }
     }
   }
@@ -221,7 +226,11 @@
 
   .lift-container {
 
-    h2 {
+    .title {
+      text-align: center;
+    }
+
+    .info {
       text-align: center;
     }
 
