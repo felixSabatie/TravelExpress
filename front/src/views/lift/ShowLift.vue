@@ -4,7 +4,9 @@
       <Loader />
     </div>
     <div v-else-if="lift !== undefined" class="lift-container">
-      <h2>Trajet de {{lift.departure_city}} à {{lift.arrival_city}}</h2>
+      <h2 class="title">Trajet de {{lift.departure_city}} à {{lift.arrival_city}}</h2>
+      <p class="info" v-if="currentUserIsDriver">Vous êtes le conducteur de ce trajet</p>
+      <p class="info" v-if="currentUserIsPassenger">Vous avez réservé {{getNbSeatsReserved(currentUser.id)}} places sur ce trajet</p>
       <div class="infos">
         <div class="row">
           <div class="col m5 s12 label">
@@ -66,9 +68,15 @@
           <p v-for="rule in lift.rules" :key="rule.id">{{rule.name}}</p>
         </div>
       </div>
+
+      <div class="driver">
+        <p>Conducteur</p>
+        <LiftAccount :account="lift.driver" />
+      </div>
+
       <div class="reservation">
         <div class="price"><span class="price-text">Prix par place : </span><span class="price-number">${{lift.price}}</span></div>
-        <div class="reservation-form">
+        <div class="reservation-form" v-if="displayReservationForm">
           <div class="input-field select">
             <select v-model="seats">
               <option v-for="i in (1, nbPlacesLeft)" :value="i" :key="i">{{i}} place{{i > 1 ? 's' : ''}}</option>
@@ -77,6 +85,12 @@
           </div>
           <button class="btn" @click="openModal">Réserver</button>
         </div>
+      </div>
+
+      <div class="passengers" v-if="lift.passengers.length > 0">
+        <p>Passagers</p>
+        <LiftAccount v-for="passenger in lift.passengers" :account="passenger.account"
+                     :additional-info="'(' + getNbSeatsReserved(passenger.account_id) + ' places)'" />
       </div>
     </div>
     <div v-else>
@@ -130,15 +144,18 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from '../../axios-wrapper'
   import {serverAddress} from '../../env'
   import Unfound from '../Unfound'
   import Loader from '../Loader'
   import moment from 'moment'
   import M from 'materialize-css'
   import Modal from '../Modal'
+  import {mapGetters} from 'vuex'
+  import LiftAccount from '../../components/LiftAccount'
 
   export default {
+    components: { Unfound, Loader, Modal, LiftAccount },
     data() {
       return {
         lift: undefined,
@@ -151,11 +168,24 @@
     },
     computed: {
       nbPlacesLeft() {
-        if(this.lift !== undefined)
-          return this.lift.capacity - this.lift.passengers.length
-      }
+        if(this.lift !== undefined) {
+          let seatsTaken = this.lift.passengers.reduce((total, passenger) => total + passenger.seats, 0)
+          return this.lift.capacity - seatsTaken
+        }
+      },
+      currentUserIsDriver() {
+        return this.currentUser.id === this.lift.driver.id
+      },
+      currentUserIsPassenger() {
+        return this.lift.passengers.some(passenger => {
+          return passenger.account_id === this.currentUser.id
+        })
+      },
+      displayReservationForm() {
+        return !this.currentUserIsDriver && !this.currentUserIsPassenger
+      },
+      ...mapGetters({currentUser: 'account'})
     },
-    components: { Unfound, Loader, Modal },
     mounted() {
       let liftId = Number(this.$route.params.id)
       if(!isNaN(liftId)) {
@@ -194,8 +224,11 @@
         }).then(() => {
           this.paymentDone = true
         }).catch(err => {
-          console.error(err);
+          console.error(err)
         })
+      },
+      getNbSeatsReserved(accountId) {
+        return this.lift.passengers.find(passenger => passenger.account_id === accountId).seats
       }
     }
   }
@@ -205,8 +238,13 @@
   @import '../../styles/colors';
 
   .lift-container {
+    padding-bottom: 20px;
 
-    h2 {
+    .title {
+      text-align: center;
+    }
+
+    .info {
       text-align: center;
     }
 
@@ -265,6 +303,11 @@
           flex: 1;
         }
       }
+    }
+
+    .driver, .passengers {
+      max-width: 500px;
+      margin: 5px auto;
     }
   }
 

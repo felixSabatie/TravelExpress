@@ -31,7 +31,7 @@
 
   .navbar {
     nav {
-      background-color: $navbar-color;
+      background-color: $primary-color;
     }
   }
 </style>

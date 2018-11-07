@@ -48,7 +48,7 @@
   import axios from '../../axios-wrapper'
   import {serverAddress} from '../../env'
   import store from '../../store'
-  import Vuex from 'vuex'
+  import {mapActions} from 'vuex'
 
   export default {
     store: store,
@@ -67,7 +67,7 @@
       isAlreadyRegistered: Boolean
     },
     methods: {
-      ...Vuex.mapActions([
+      ...mapActions([
         'setToken',
         'setCurrentAccount'
       ]),
@@ -75,7 +75,6 @@
       getCurrentUser() {
         axios.get(`${serverAddress}/api/accounts/current/`)
         .then(response => {
-          console.log(response.data);
           this.setCurrentAccount(response.data);
         }).catch(error => {
           console.error(error)//TODO : handle error
@@ -90,7 +89,6 @@
               password: this.account.password
             }
           }).then(response => {
-            console.log(response);
             this.setToken(response.data.jwt);
             this.getCurrentUser();
             // this.$router.push({name: 'new_lift' /*, params: {id: response.data.id}*/})//TODO: check what data to send and to which view

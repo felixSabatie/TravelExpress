@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_214913) do
+ActiveRecord::Schema.define(version: 2018_11_06_230401) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "first_name"
@@ -19,13 +19,6 @@ ActiveRecord::Schema.define(version: 2018_10_31_214913) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email"
-  end
-
-  create_table "drivers", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.bigint "account_id"
-    t.bigint "lift_id"
-    t.index ["account_id"], name: "index_drivers_on_account_id"
-    t.index ["lift_id"], name: "index_drivers_on_lift_id"
   end
 
   create_table "lifts", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
@@ -40,6 +33,8 @@ ActiveRecord::Schema.define(version: 2018_10_31_214913) do
     t.datetime "updated_at", null: false
     t.string "departure_city"
     t.string "arrival_city"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_lifts_on_account_id"
   end
 
   create_table "lifts_rules", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
@@ -52,6 +47,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_214913) do
   create_table "passengers", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "account_id"
     t.bigint "lift_id"
+    t.integer "seats"
     t.index ["account_id"], name: "index_passengers_on_account_id"
     t.index ["lift_id"], name: "index_passengers_on_lift_id"
   end
@@ -62,8 +58,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_214913) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "drivers", "accounts"
-  add_foreign_key "drivers", "lifts"
+  add_foreign_key "lifts", "accounts"
   add_foreign_key "lifts_rules", "lifts"
   add_foreign_key "lifts_rules", "rules"
   add_foreign_key "passengers", "accounts"

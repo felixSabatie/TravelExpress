@@ -4,6 +4,7 @@ import NewLift from './views/lift/NewLift'
 import ShowLift from './views/lift/ShowLift'
 import Login from './views/account/Login'
 import Register from './views/account/Register'
+import Disconnect from './views/account/Disconnect'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: Register,
+    },
+    {
+      path: '/disconnect',
+      name: 'disconnect',
+      component: Disconnect,
     }
   ]
 })

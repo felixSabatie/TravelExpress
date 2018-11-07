@@ -9,28 +9,38 @@
 
 <script>
   import Navbar from '@/components/Navbar.vue'
+  import {mapGetters} from 'vuex'
 
   export default {
     components: {
       Navbar
     },
-    data: () => {
-      return {
-        routes: [
-          {
+    computed: {
+      routes() {
+        let routes = []
+        if(this.token) {
+          routes.push({
             name: 'Créer un trajet',
             link: {
               name: 'new_lift'
             }
-          },
-          {
+          }, {
+            name: 'Se déconnecter',
+            link: {
+              name: 'disconnect'
+            }
+          })
+        } else {
+          routes.push({
             name: 'Se connecter',
             link: {
               name: 'login'
             }
-          }
-        ]
-      }
+          })
+        }
+        return routes
+      },
+      ...mapGetters({token: 'account_token'})
     }
   }
 </script>

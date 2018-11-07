@@ -18,13 +18,7 @@ module Api
     end
 
     def current
-      base_account = current_account
-      account = {
-          :first_name => base_account.first_name,
-          :last_name => base_account.last_name,
-          :email => base_account.email
-      }
-      render_json_with_includes(account)
+      render_json_with_includes(current_account)
     end
 
     private
@@ -34,7 +28,7 @@ module Api
     end
 
     def render_json_with_includes(data)
-      render json: data, include: [:drivers, :passengers]
+      render json: data, include: [:lifts, :passengers], except: [:password_digest]
     end
   end
 end
