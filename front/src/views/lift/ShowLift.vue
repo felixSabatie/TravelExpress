@@ -68,7 +68,7 @@
       </div>
       <div class="reservation">
         <div class="price"><span class="price-text">Prix par place : </span><span class="price-number">${{lift.price}}</span></div>
-        <div class="reservation-form" v-if="currentUser.id !== lift.driver.id">
+        <div class="reservation-form" v-if="displayReservationForm">
           <div class="input-field select">
             <select v-model="seats">
               <option v-for="i in (1, nbPlacesLeft)" :value="i" :key="i">{{i}} place{{i > 1 ? 's' : ''}}</option>
@@ -152,10 +152,23 @@
     },
     computed: {
       nbPlacesLeft() {
-        if(this.lift !== undefined)
-          // TODO handle number of seats
-          return this.lift.capacity - this.lift.passengers.length
-      }, ...mapGetters({currentUser: 'account'})
+        if(this.lift !== undefined) {
+          let seatsTaken = this.lift.passengers.reduce((total, passenger) => total + passenger.seats, 0)
+          return this.lift.capacity - seatsTaken
+        }
+      },
+      currentUserIsDriver() {
+        return this.currentUser.id === this.lift.driver.id
+      },
+      currentUserIsPassenger() {
+        return this.lift.passengers.some(passenger => {
+          return passenger.account_id === this.currentUser.id
+        })
+      },
+      displayReservationForm() {
+        return !this.currentUserIsDriver && !this.currentUserIsPassenger
+      },
+      ...mapGetters({currentUser: 'account'})
     },
     components: { Unfound, Loader, Modal },
     mounted() {
