@@ -28,7 +28,6 @@ export default new Vuex.Store({
     RESET: (state) => {
       const s = getDefaultState()
       Object.keys(s).forEach(key => {
-        console.log(state[key], s[key])
         state[key] = s[key]
       })
     }

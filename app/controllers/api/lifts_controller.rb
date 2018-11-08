@@ -29,7 +29,7 @@ module Api
 
     def add_reservation
       lift = Lift.find params[:id]
-      nb_seats =  params.require(:seats)
+      nb_seats = params.require(:seats)
       passenger = Passenger.new(seats: nb_seats)
       passenger.account = current_account
       passenger.lift = lift
@@ -38,6 +38,12 @@ module Api
       else
         render status: 422, json: {error: 'Reservation is invalid'}
       end
+    end
+
+    def search
+      render json: Lift.where("lower(departure_city) LIKE :from AND lower(arrival_city) LIKE :to",
+                              from: "%#{params.require(:from).downcase}%", to: "%#{params.require(:to).downcase}%")
+                       .order(:departure_date)
     end
 
     private
