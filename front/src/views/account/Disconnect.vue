@@ -1,5 +1,5 @@
 <template>
-  <div class="disconnect">
+  <div class="disconnect container">
     <h3>Vous avez bien été déconnecté(e)</h3>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="register">
+  <div class="register container">
     <h2>S'inscrire</h2>
     <Authentification-form :isAlreadyRegistered="false" ></Authentification-form>
   </div>

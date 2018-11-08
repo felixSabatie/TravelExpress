@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :api do
     post '/account_token' => 'account_token#create'
     get '/accounts/current' => 'accounts#current'
+    get '/lifts/search' => 'lifts#search'
     resources :lifts, except: [:new, :edit]
     post '/lifts/:id/reservations' => 'lifts#add_reservation'
     resources :rules, only: :index

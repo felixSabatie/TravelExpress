@@ -1,5 +1,5 @@
 <template>
-  <div class="show-lift">
+  <div class="show-lift container">
     <div v-if="loading">
       <Loader />
     </div>
