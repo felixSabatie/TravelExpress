@@ -41,9 +41,9 @@ module Api
     end
 
     def search
-      render json: Lift.where("lower(departure_city) LIKE :from AND lower(arrival_city) LIKE :to",
+      render_json_with_includes(Lift.where("lower(departure_city) LIKE :from AND lower(arrival_city) LIKE :to",
                               from: "%#{params.require(:from).downcase}%", to: "%#{params.require(:to).downcase}%")
-                       .order(:departure_date)
+                       .order(:departure_date))
     end
 
     private

@@ -1,8 +1,8 @@
 <template>
   <div class="seats">
-    <div v-for="(seat,index) in capacity" in seatsAvailable>
-      <i v-if="index < nbPlacesLeft" class="material-icons prefix availableSeat">airline_seat_legroom_normal</i>
-      <i v-else class="material-icons prefix unavailableSeat">airline_seat_legroom_normal</i>
+    <div v-for="(seat, index) in capacity">
+      <i v-if="index < nbPlacesLeft" class="material-icons available-seat">airline_seat_legroom_normal</i>
+      <i v-else class="material-icons unavailable-seat">airline_seat_legroom_normal</i>
     </div>
   </div>
 </template>
@@ -10,10 +10,7 @@
 <script>
   export default {
     name: "Seats",
-    props : {
-      nbPlacesLeft: "",
-      capacity: "",
-    }
+    props : ['nbPlacesLeft', 'capacity']
   }
 </script>
 
@@ -25,7 +22,7 @@
     flex-direction: row;
   }
 
-  .unavailableSeats{
+  .unavailable-seat{
     color: #909999;
   }
 </style>

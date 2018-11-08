@@ -22,8 +22,9 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row buttons">
             <button class="btn right"><i class="material-icons left">search</i>Rechecher</button>
+            <button @click.prevent="getLifts()" class="btn right"><i class="material-icons left">list</i>Tous les trajets</button>
           </div>
         </form>
       </div>
@@ -49,14 +50,13 @@
           from: '',
           to: ''
         },
-        results: []
+        results: [],
+        userSearched: false,
       }
-    },
-    mounted(){
-      this.getLifts();
     },
     methods: {
       search() {
+        this.userSearched = true
         if (this.query.from && this.query.to) {
           axios.get(`${serverAddress}/api/lifts/search`, {
             params: this.query
@@ -68,6 +68,7 @@
         }
       },
       getLifts() {
+        this.userSearched = true
         axios.get(`${serverAddress}/api/lifts/`)
         .then(response => {
           this.results = response.data;
@@ -101,6 +102,12 @@
           padding: 5px 5px;
           border-radius: 10px;
           background-color: $white;
+        }
+      }
+
+      .buttons {
+        .btn {
+          margin-left:10px;
         }
       }
     }
