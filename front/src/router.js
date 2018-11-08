@@ -5,6 +5,7 @@ import ShowLift from './views/lift/ShowLift'
 import Login from './views/account/Login'
 import Register from './views/account/Register'
 import Disconnect from './views/account/Disconnect'
+import SearchLift from './views/lift/SearchLift'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
       path: '/disconnect',
       name: 'disconnect',
       component: Disconnect,
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: SearchLift,
     }
   ]
 })

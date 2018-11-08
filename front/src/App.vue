@@ -17,7 +17,12 @@
     },
     computed: {
       routes() {
-        let routes = []
+        let routes = [{
+          name: 'Rechercher',
+          link: {
+            name: 'search'
+          }
+        }]
         if(this.token) {
           routes.push({
             name: 'Créer un trajet',
