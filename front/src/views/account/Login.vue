@@ -1,8 +1,7 @@
 <template>
   <div class="login container">
     <h2>Se connecter</h2>
-    <ListLifts></ListLifts>
-    <!--<Authentification-form :isAlreadyRegistered="true" ></Authentification-form>-->
+    <Authentification-form :isAlreadyRegistered="true" ></Authentification-form>
   </div>
 </template>
 

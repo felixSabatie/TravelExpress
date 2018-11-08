@@ -4,7 +4,7 @@ module Api
     before_action :set_lift, only: [:show]
 
     def index
-      lifts = Lift.includes([:drivers, :passengers, :rules]).all
+      lifts = Lift.includes([:driver, :passengers, :rules]).all
       render_json_with_includes(lifts)
     end
 

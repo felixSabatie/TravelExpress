@@ -30,7 +30,7 @@
 
       <div class="results" v-if="results && results.length > 0">
         <h3>Résultats</h3>
-        {{results}}
+        <ListLifts :lifts="results"></ListLifts>
       </div>
     </div>
   </div>
@@ -39,8 +39,10 @@
 <script>
   import axios from '../../axios-wrapper'
   import {serverAddress} from '../../env'
+  import ListLifts from "./ListLifts";
 
   export default {
+    components: {ListLifts},
     data() {
       return {
         query: {
@@ -49,6 +51,9 @@
         },
         results: []
       }
+    },
+    mounted(){
+      this.getLifts();
     },
     methods: {
       search() {
@@ -61,7 +66,15 @@
             console.error(error)
           })
         }
-      }
+      },
+      getLifts() {
+        axios.get(`${serverAddress}/api/lifts/`)
+        .then(response => {
+          this.results = response.data;
+        }).catch(error => {
+          console.error(error)//TODO : handle error
+        });
+      },
     }
   }
 </script>

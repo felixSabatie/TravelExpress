@@ -1,24 +1,27 @@
 <template>
-  <div class="lift row">
+  <!--TODO : Ajouter les rules-->
+  <div @click="showDetails" class="lift row section">
     <div class="departure col s4">
-      <Location></Location>
+      <Location :city="lift.departure_city" :date="lift.departure_date"
+                :address="lift.departure_address"></Location>
     </div>
     <div class="col s1">
       <i class="material-icons prefix">label_important</i>
     </div>
     <div class="arrival col s4">
-      <Location></Location>
+      <Location :city="lift.arrival_city" :date="lift.arrival_date"
+                :address="lift.arrival_address"></Location>
     </div>
     <div class="col s2">
       <div class="car">
-        Jeep Liberty
+        {{lift.car}}
       </div>
       <div class="seats">
-        <Seats></Seats>
+        <Seats :capacity="lift.capacity" :nbPlacesLeft="nbPlacesLeft"></Seats>
       </div>
     </div>
     <div class="price col s1">
-      25$
+      {{lift.price}}
     </div>
   </div>
 </template>
@@ -29,7 +32,22 @@
 
   export default {
     name: "Lift",
-    components: {Seats, Location}
+    components: {Seats, Location},
+    props: ['lift'],
+    computed: {
+      nbPlacesLeft() {
+        if (this.lift !== undefined) {
+          let seatsTaken = this.lift.passengers.reduce(
+              (total, passenger) => total + passenger.seats, 0)
+          return this.lift.capacity - seatsTaken
+        }
+      },
+    },
+    methods:{
+      showDetails(){
+        this.$router.push({name: 'show_lift', params: {id: this.lift.id}})
+      }
+    }
   }
 </script>
 
@@ -39,7 +57,13 @@
   .lift {
     display: flex;
     flex-direction: row;
-    align-items : center;
+    align-items: center;
+    margin: 0;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $light-grey;
+    }
   }
 
 

@@ -24,7 +24,7 @@ module Api
     private
 
     def set_account
-      @account = Account.includes([:drivers, :passengers]).find(params[:id])
+      @account = Account.includes([:driver, :passengers]).find(params[:id])
     end
 
     def render_json_with_includes(data)

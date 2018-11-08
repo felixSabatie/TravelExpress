@@ -1,20 +1,31 @@
 <template>
   <div class="location">
     <div class="city">
-      Montreal
+      {{city}}
     </div>
     <div class="date">
-      15/04/18
+      {{formatDate(date)}}
     </div>
     <div class="address">
-      1556 Rue Victor Guimond
+      {{address}}
     </div>
   </div>
 </template>
 
 <script>
+  import moment from 'moment'
   export default {
-    name: "Location"
+    name: "Location",
+    props : {
+      city: "",
+      date: "",
+      address: "",
+    },
+    methods:{
+      formatDate(date) {
+        return moment(date).format('[Le ]DD/MM/YYYY[, à ]HH[h]mm')
+      },
+    }
   }
 </script>
 

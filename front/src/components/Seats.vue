@@ -1,21 +1,19 @@
 <template>
   <div class="seats">
-    <!--v-for seat in seatsAvailable-->
-    <div class="availableSeats">
-      <i class="material-icons prefix">airline_seat_legroom_normal</i>
-      <i class="material-icons prefix">airline_seat_legroom_normal</i>
-    </div>
-    <!--v-for seat in seatsNotAvailable-->
-    <div class="takenSeats">
-      <i class="material-icons prefix">airline_seat_legroom_normal</i>
-      <i class="material-icons prefix">airline_seat_legroom_normal</i>
+    <div v-for="(seat,index) in capacity" in seatsAvailable>
+      <i v-if="index < nbPlacesLeft" class="material-icons prefix availableSeat">airline_seat_legroom_normal</i>
+      <i v-else class="material-icons prefix unavailableSeat">airline_seat_legroom_normal</i>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "Seats"
+    name: "Seats",
+    props : {
+      nbPlacesLeft: "",
+      capacity: "",
+    }
   }
 </script>
 
@@ -27,7 +25,7 @@
     flex-direction: row;
   }
 
-  .takenSeats{
+  .unavailableSeats{
     color: #909999;
   }
 </style>

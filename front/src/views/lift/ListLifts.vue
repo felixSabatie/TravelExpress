@@ -1,23 +1,9 @@
 <template>
   <div class="listLifts">
-    <!--<div class="container">-->
-      <!--v-for "item in items"-->
-      <div class="section">
-        <Lift></Lift>
+      <div v-for="(lift,index) in lifts" :key="lift.id">
+        <Lift :lift="lift"></Lift>
+        <div v-if="index !== lifts.length-1" class="divider"></div>
       </div>
-
-      <div class="divider"></div>
-
-      <div class="section">
-        <Lift></Lift>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="section">
-        <Lift></Lift>
-      </div>
-    <!--</div>-->
   </div>
 </template>
 
@@ -26,8 +12,10 @@
 
   export default {
     name: "ListLifts",
-    components: {Lift}
+    components: {Lift},
+    props: ['lifts'],
   }
+
 </script>
 
 <style scoped>
