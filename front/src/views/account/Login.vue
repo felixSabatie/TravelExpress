@@ -7,9 +7,10 @@
 
 <script>
   import AuthentificationForm from "./AuthentificationForm";
+  import ListLifts from "../lift/ListLifts";
   export default {
     name: "Login",
-    components: {AuthentificationForm}
+    components: {ListLifts, AuthentificationForm}
   }
 </script>
 

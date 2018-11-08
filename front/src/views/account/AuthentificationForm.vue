@@ -15,7 +15,7 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">email</i>
-          <input v-model="account.email" id="email" type="text" class="validate" required>
+          <input v-model="account.email" id="email" type="email" class="validate" required>
           <label for="email">Adresse email</label>
         </div>
       </div>
