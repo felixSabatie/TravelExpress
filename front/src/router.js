@@ -15,8 +15,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Login,
+      redirect: {name: 'search'}
     },
     {
       path: '/lifts/new',

@@ -1,5 +1,5 @@
 <template>
-  <div class="new-lift">
+  <div class="new-lift container">
     <h2>Publier un trajet</h2>
     <form @submit.prevent="sendForm">
       <div class="row">

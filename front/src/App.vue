@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar :routes="routes" />
-    <div class="container">
+    <div class="router-view-container">
       <router-view/>
     </div>
   </div>
@@ -52,4 +52,16 @@
 
 <style lang="scss">
   @import 'styles/app';
+
+  #app {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .router-view-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+  }
 </style>
