@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="price col s1">
-      {{lift.price}}
+      ${{parseFloat(lift.price)}}
     </div>
   </div>
 </template>
