@@ -91,7 +91,7 @@
           }).then(response => {
             this.setToken(response.data.jwt);
             this.getCurrentUser();
-            // this.$router.push({name: 'new_lift' /*, params: {id: response.data.id}*/})//TODO: check what data to send and to which view
+            this.$router.push({name: 'search'})
           }).catch(error => {
             console.error(error)//TODO : handle error
           })
