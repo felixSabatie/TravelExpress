@@ -30,6 +30,11 @@
               name: 'new_lift'
             }
           }, {
+            name: 'Modifier mes informations',
+            link: {
+              name: 'edit-account'
+            }
+          }, {
             name: 'Se déconnecter',
             link: {
               name: 'disconnect'

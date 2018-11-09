@@ -1,17 +1,17 @@
 module Api
   class AccountsController < ApplicationController
     before_action :authenticate_account, only: [:current]
-    before_action :set_account, only: [:show]
+    before_action :set_account, only: [:show, :update]
 
     def show
       render_json_with_includes(@account)
     end
 
     def update
-      if @account.update params.require(:account).permit(:first_name, :last_name, :email, :phone)
+      if @account.update(params.require(:account).permit(:first_name, :last_name, :email, :phone))
         render status: 200
       else
-        render status: 422, json: {error: 'Account is invalid'}
+        render json: @account.errors, status: :unprocessable_entity
       end
     end
 
@@ -32,11 +32,11 @@ module Api
     private
 
     def set_account
-      @account = Account.includes([:driver, :passengers]).find(params[:id])
+      @account = Account.includes([:drivers, :passengers]).find(params[:id])
     end
 
     def render_json_with_includes(data)
-      render json: data, include: [:lifts, :passengers], except: [:password_digest]
+      render json: data, include: [:passengers, :drivers], except: [:password_digest]
     end
   end
 end
