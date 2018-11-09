@@ -1,8 +1,9 @@
 class Account < ApplicationRecord
-  has_many :lifts
 
   has_many :passengers
   has_many :lifts, through: :passengers
+
+  has_many :drivers, class_name: 'Lift'
 
   validates :first_name, presence: true
   validates :last_name, presence: true

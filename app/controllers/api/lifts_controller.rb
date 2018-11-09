@@ -34,7 +34,7 @@ module Api
       passenger.account = current_account
       passenger.lift = lift
       if passenger.save
-        render json: "success"
+        render_json_with_includes(lift)
       else
         render status: 422, json: {error: 'Reservation is invalid'}
       end

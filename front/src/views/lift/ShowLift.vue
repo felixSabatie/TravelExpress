@@ -71,7 +71,7 @@
 
       <div class="driver">
         <p>Conducteur</p>
-        <LiftAccount :account="lift.driver" />
+        <LiftAccount :account="lift.driver" @click="showAccount(lift.driver)"/>
       </div>
 
       <div class="reservation">
@@ -90,7 +90,9 @@
       <div class="passengers" v-if="lift.passengers.length > 0">
         <p>Passagers</p>
         <LiftAccount v-for="passenger in lift.passengers" :account="passenger.account"
-                     :additional-info="'(' + getNbSeatsReserved(passenger.account_id) + ' places)'" />
+                     :additional-info="'(' + getNbSeatsReserved(passenger.account_id) + ' places)'"
+                     @click="showAccount(passenger.account)"
+        />
       </div>
     </div>
     <div v-else>
@@ -131,13 +133,25 @@
         </div>
       </div>
       <div slot="footer">
-        <button class="btn right" @click="sendReservation">
-          <span v-if="paymentDone" class="accepted-payment">
-            <i class="material-icons">check</i>
-            <span>Réservation validée</span>
-          </span>
-          <span v-else>Valider la réservation</span>
-        </button>
+        <button class="btn right" @click="sendReservation">Valider la réservation</button>
+      </div>
+    </Modal>
+
+    <Modal v-if="showAccountModal" class="modal account-modal" @close="showAccountModal = false">
+      <div slot="header">
+        <h2>{{shownAccount.first_name}} {{shownAccount.last_name}}</h2>
+      </div>
+      <div slot="body">
+        <div class="account-infos">
+          <div class="row">
+            <div class="col m6 s12 label">Email : </div>
+            <div class="col m6 s11 offset-s1 value"><a :href="'mailto:' + shownAccount.email">{{shownAccount.email}}</a></div>
+          </div>
+          <div class="row" v-if="shownAccount.phone">
+            <div class="col m6 s12 label">Numéro de téléphone : </div>
+            <div class="col m6 s11 offset-s1 value"><a :href="'tel:' + shownAccount.phone">{{shownAccount.phone}}</a></div>
+          </div>
+        </div>
       </div>
     </Modal>
   </div>
@@ -164,6 +178,8 @@
         totalPrice: undefined,
         showModal: false,
         paymentDone: false,
+        showAccountModal: false,
+        shownAccount: undefined
       }
     },
     computed: {
@@ -221,14 +237,21 @@
       sendReservation() {
         axios.post(`${serverAddress}/api/lifts/${this.lift.id}/reservations`, {
           seats: this.seats
-        }).then(() => {
-          this.paymentDone = true
+        }).then(response => {
+          this.lift = response.data
+          this.showModal = false
+          M.toast({html: 'Votre réservation a bien été effectuée'})
         }).catch(err => {
           console.error(err)
         })
       },
       getNbSeatsReserved(accountId) {
         return this.lift.passengers.find(passenger => passenger.account_id === accountId).seats
+      },
+      showAccount(account) {
+        console.log(account)
+        this.shownAccount = account
+        this.showAccountModal = true
       }
     }
   }
@@ -323,6 +346,20 @@
       align-items: center;
       & > *:first-child {
         margin-right: 5px;
+      }
+    }
+  }
+
+  .account-modal {
+    .account-infos {
+      text-align: left;
+
+      .label {
+        font-weight: bold;
+
+        @media only screen and (min-width: 601px) {
+          text-align: right;
+        }
       }
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="lift-account">
+  <div class="lift-account" @click="$emit('click')">
     <div class="image-container">
       <img src="/images/user_icon.png" alt="user icon">
     </div>
@@ -24,6 +24,14 @@
     background-color: $light-grey;
     border-radius: 5px;
     box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, .3);
+    transition: box-shadow .3s, transform .3s;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, .3);
+      transform: translate(-2px, -2px);
+    }
 
     .image-container {
       width: 50px;
