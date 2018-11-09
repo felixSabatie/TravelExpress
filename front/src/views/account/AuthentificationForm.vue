@@ -49,6 +49,7 @@
   import {serverAddress} from '../../env'
   import store from '../../store'
   import {mapActions} from 'vuex'
+  import M from 'materialize-css'
 
   export default {
     store: store,
@@ -101,17 +102,23 @@
           this.getCurrentUser();
           this.$router.push({name: 'search'})
         }).catch(error => {
+          if(error.response.status === 404) {
+            M.toast({html: 'Vos identifiants sont incorrects, veuillez réessayer'})
+          }
           console.error(error)//TODO : handle error
         })
       },
-      
+
       register() {
         axios.post(`${serverAddress}/api/accounts`, {
           account: this.account,
         }).then(() => {
           this.login()
         }).catch(error => {
-          console.error(error)//TODO : handle error
+          if(error.response.status === 422) {
+            M.toast({html: 'Le formulaire n\'est pas valide'})
+          }
+          console.error(error)
         })
       }
     }
