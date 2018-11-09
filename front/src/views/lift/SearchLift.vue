@@ -99,7 +99,7 @@
 
   .search {
     flex: 1;
-    background: url(http://mediapa.co.nz/wp-content/uploads/2017/04/Happy-people-car-hire.jpg) center top;
+    background: url(/images/background.jpg) center top;
     background-size: cover;
     padding-bottom: 20px;
 
