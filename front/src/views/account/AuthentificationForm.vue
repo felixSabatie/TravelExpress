@@ -82,32 +82,38 @@
       },
 
       sendForm() {
-        if (this.isAlreadyRegistered) {//login
-          axios.post(`${serverAddress}/api/account_token`, {
-            auth: {
-              email: this.account.email,
-              password: this.account.password
-            }
-          }).then(response => {
-            this.setToken(response.data.jwt);
-            this.getCurrentUser();
-            this.$router.push({name: 'search'})
-          }).catch(error => {
-            console.error(error)//TODO : handle error
-          })
+        if (this.isAlreadyRegistered) {
+          this.login()
         }
-        else {//register
-          axios.post(`${serverAddress}/api/accounts`, {
-            account: this.account,
-          }).then(() => {
-            //vueX add response (token)
-            this.$router.push({name: 'login' /*, params: {id: response.data.id}*/})//TODO: check what data to send and to which view
-          }).catch(error => {
-            console.error(error)//TODO : handle error
-          })
+        else {
+          this.register()
         }
+      },
+
+      login() {
+        axios.post(`${serverAddress}/api/account_token`, {
+          auth: {
+            email: this.account.email,
+            password: this.account.password
+          }
+        }).then(response => {
+          this.setToken(response.data.jwt);
+          this.getCurrentUser();
+          this.$router.push({name: 'search'})
+        }).catch(error => {
+          console.error(error)//TODO : handle error
+        })
+      },
+      
+      register() {
+        axios.post(`${serverAddress}/api/accounts`, {
+          account: this.account,
+        }).then(() => {
+          this.login()
+        }).catch(error => {
+          console.error(error)//TODO : handle error
+        })
       }
-      ,
     }
   }
 </script>
