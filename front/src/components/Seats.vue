@@ -1,7 +1,7 @@
 <template>
   <div class="seats">
     <div v-for="(seat, index) in capacity">
-      <i v-if="index < nbPlacesLeft" class="material-icons available-seat">airline_seat_legroom_normal</i>
+      <i v-if="index < capacity - nbPlacesLeft" class="material-icons available-seat">airline_seat_legroom_normal</i>
       <i v-else class="material-icons unavailable-seat">airline_seat_legroom_normal</i>
     </div>
   </div>

@@ -24,6 +24,7 @@
     background-color: $light-grey;
     border-radius: 5px;
     box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, .3);
+    margin-bottom: 10px;
 
     .image-container {
       width: 50px;

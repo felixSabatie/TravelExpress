@@ -131,13 +131,7 @@
         </div>
       </div>
       <div slot="footer">
-        <button class="btn right" @click="sendReservation">
-          <span v-if="paymentDone" class="accepted-payment">
-            <i class="material-icons">check</i>
-            <span>Réservation validée</span>
-          </span>
-          <span v-else>Valider la réservation</span>
-        </button>
+        <button class="btn right" @click="sendReservation">Valider la réservation</button>
       </div>
     </Modal>
   </div>
@@ -221,8 +215,10 @@
       sendReservation() {
         axios.post(`${serverAddress}/api/lifts/${this.lift.id}/reservations`, {
           seats: this.seats
-        }).then(() => {
-          this.paymentDone = true
+        }).then(response => {
+          this.lift = response.data
+          this.showModal = false
+          M.toast({html: 'Votre réservation a bien été effectuée'})
         }).catch(err => {
           console.error(err)
         })
