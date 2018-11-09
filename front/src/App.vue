@@ -46,6 +46,11 @@
             link: {
               name: 'login'
             }
+          }, {
+            name: 'S\'inscrire',
+            link: {
+              name: 'register'
+            }
           })
         }
         return routes
