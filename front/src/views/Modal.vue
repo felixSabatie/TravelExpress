@@ -16,7 +16,7 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <button class="btn" @click.stop="close">OK</button>
+              <button class="btn" @click.stop="close">Fermer</button>
             </slot>
           </div>
         </div>
@@ -55,11 +55,11 @@ export default {
   transition: opacity 0.3s ease;
 
   .modal-wrapper {
+    width: 600px;
+    max-width: 90%;
+    max-height: 90%;
 
     .modal-container {
-      min-width: 300px;
-      max-width: 90%;
-      max-height: 90%;
       overflow-y: auto;
       overflow-x: hidden;
       margin: 0 auto;
