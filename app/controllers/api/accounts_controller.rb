@@ -7,6 +7,14 @@ module Api
       render_json_with_includes(@account)
     end
 
+    def update
+      if @account.update params.require(:account).permit(:first_name, :last_name, :email, :phone)
+        render status: 200
+      else
+        render status: 422, json: {error: 'Account is invalid'}
+      end
+    end
+
     def create
       account_params = params.require(:account).permit(:first_name, :last_name, :email, :password, :password_confirmation)
       account = Account.new(account_params)
