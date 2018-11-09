@@ -1,28 +1,33 @@
 <template>
   <!--TODO : Ajouter les rules-->
   <div @click="showDetails" class="lift row section">
-    <div class="departure col s4">
-      <Location :city="lift.departure_city" :date="lift.departure_date"
-                :address="lift.departure_address"></Location>
-    </div>
-    <div class="col s1">
-      <i class="material-icons prefix">label_important</i>
-    </div>
-    <div class="arrival col s4">
-      <Location :city="lift.arrival_city" :date="lift.arrival_date"
-                :address="lift.arrival_address"></Location>
-    </div>
-    <div class="col s2">
-      <div class="car">
-        {{lift.car}}
+
+    <div class="locations col m9 s12">
+      <div class="location">
+        <Location :city="lift.departure_city" :date="lift.departure_date"
+                  :address="lift.departure_address"></Location>
       </div>
-      <div class="seats">
+      <div class="arrow">
+        <i class="material-icons prefix">label_important</i>
+      </div>
+      <div class="location">
+        <Location :city="lift.arrival_city" :date="lift.arrival_date"
+                  :address="lift.arrival_address"></Location>
+      </div>
+    </div>
+
+    <div class="infos col m3 s12">
+      <div class="car-infos">
+        <div class="car">
+          {{lift.car}}
+        </div>
         <Seats :capacity="lift.capacity" :nbPlacesLeft="nbPlacesLeft"></Seats>
       </div>
+      <div class="price">
+        ${{parseFloat(lift.price)}}
+      </div>
     </div>
-    <div class="price col s1">
-      ${{parseFloat(lift.price)}}
-    </div>
+
   </div>
 </template>
 
@@ -55,14 +60,43 @@
   @import '../styles/colors';
 
   .lift {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     margin: 0;
     cursor: pointer;
 
     &:hover {
       background-color: $light-grey;
+    }
+
+    .infos, .locations {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .locations {
+      .location {
+        flex: 4;
+      }
+
+      .arrow {
+        flex: 1;
+        text-align: center;
+      }
+    }
+
+    .infos {
+
+      @media only screen and (max-width: 601px) {
+        margin-top: 20px;
+      }
+      .car-infos {
+        flex: 1;
+        text-align: center;
+      }
+      .price {
+        flex: 1;
+        text-align: center;
+      }
     }
   }
 

@@ -20,6 +20,7 @@
   .seats{
     display: flex;
     flex-direction: row;
+    justify-content: center;
   }
 
   .unavailable-seat{

@@ -24,14 +24,19 @@
           </div>
           <div class="row buttons">
             <button class="btn right"><i class="material-icons left">search</i>Rechecher</button>
-            <button @click.prevent="getLifts()" class="btn right"><i class="material-icons left">list</i>Tous les trajets</button>
+            <button @click.prevent="getLifts()" class="btn right"><i class="material-icons left">list</i>Tous
+              les trajets
+            </button>
           </div>
         </form>
       </div>
 
-      <div class="results" v-if="results && results.length > 0">
+      <div class="results" v-if="userSearched">
         <h3>Résultats</h3>
-        <ListLifts :lifts="results"></ListLifts>
+        <ListLifts v-if="results && results.length > 0" :lifts="results"></ListLifts>
+        <p v-else>
+          0 résultats correspondants à la recherche
+        </p>
       </div>
     </div>
   </div>
@@ -54,10 +59,19 @@
         userSearched: false,
       }
     },
+    mounted() {
+      this.query.from = this.$route.query.from
+      this.query.to = this.$route.query.to
+      if(this.query.from && this.query.to) {
+        this.search()
+      }
+    },
     methods: {
       search() {
         this.userSearched = true
         if (this.query.from && this.query.to) {
+          this.$router.push({name: 'search', query: {from: this.query.from, to: this.query.to}})
+
           axios.get(`${serverAddress}/api/lifts/search`, {
             params: this.query
           }).then(response => {
@@ -87,6 +101,7 @@
     flex: 1;
     background: url(http://mediapa.co.nz/wp-content/uploads/2017/04/Happy-people-car-hire.jpg) center top;
     background-size: cover;
+    padding-bottom: 20px;
 
     .title {
       color: $white;
@@ -107,7 +122,7 @@
 
       .buttons {
         .btn {
-          margin-left:10px;
+          margin-left: 10px;
         }
       }
     }
