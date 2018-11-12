@@ -1,8 +1,13 @@
 <template>
   <div class="seats">
     <div v-for="(seat, index) in capacity">
-      <i v-if="index < capacity - nbPlacesLeft" class="material-icons available-seat">airline_seat_legroom_normal</i>
-      <i v-else class="material-icons unavailable-seat">airline_seat_legroom_normal</i>
+      <div v-if="nbPlacesLeft <= 0">
+        <p>Complet</p>
+      </div>
+      <div v-else>
+        <i v-if="index < nbPlacesLeft" class="material-icons available-seat">person_outline</i>
+        <i v-else class="material-icons unavailable-seat">person</i>
+      </div>
     </div>
   </div>
 </template>
@@ -10,20 +15,17 @@
 <script>
   export default {
     name: "Seats",
-    props : ['nbPlacesLeft', 'capacity']
+    props: ['nbPlacesLeft', 'capacity'],
   }
 </script>
 
 <style lang="scss">
   @import '../styles/colors';
 
-  .seats{
+  .seats {
     display: flex;
     flex-direction: row;
     justify-content: center;
   }
 
-  .unavailable-seat{
-    color: #909999;
-  }
 </style>
