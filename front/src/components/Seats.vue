@@ -5,8 +5,8 @@
         <p>Complet</p>
       </div>
       <div v-else>
-        <i v-if="index < nbPlacesLeft" class="material-icons available-seat">person_outline</i>
-        <i v-else class="material-icons unavailable-seat">person</i>
+        <i v-if="index < capacity - nbPlacesLeft" class="material-icons unavailable-seat">person</i>
+        <i v-else class="material-icons available-seat">person_outline</i>
       </div>
     </div>
   </div>
