@@ -13,4 +13,6 @@ Rails.application.routes.draw do
     resources :rules, only: :index
     resources :accounts, only: [:show, :create, :update]
   end
+
+  get '*path', to: 'static_files#index'
 end
