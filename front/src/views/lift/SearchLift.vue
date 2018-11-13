@@ -99,7 +99,7 @@
 
   .search {
     flex: 1;
-    background: url(/images/background.jpg) center top;
+    background: url(/images/background.jpg) center top fixed;
     background-size: cover;
     padding-bottom: 20px;
 

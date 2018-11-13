@@ -14,7 +14,10 @@
           </div>
           <div class="col m7 s11 offset-s1 icon-text">
             <i class="material-icons prefix">place</i>
-            <span>{{lift.departure_address}}, {{lift.departure_city}}</span>
+            <a :href="'https://www.google.com/maps/search/?api=1&query=' + lift.departure_city + ' ' + lift.departure_address"
+            target="_blank">
+              {{lift.departure_address}}, {{lift.departure_city}}
+            </a>
           </div>
         </div>
 
@@ -24,7 +27,10 @@
           </div>
           <div class="col m7 s11 offset-s1 icon-text">
             <i class="material-icons prefix">flag</i>
-            <span>{{lift.arrival_address}}, {{lift.arrival_city}}</span>
+            <a :href="'https://www.google.com/maps/search/?api=1&query=' + lift.arrival_city + ' ' + lift.arrival_address"
+               target="_blank">
+              {{lift.arrival_address}}, {{lift.arrival_city}}
+            </a>
           </div>
         </div>
 
