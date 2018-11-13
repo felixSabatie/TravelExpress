@@ -24,7 +24,7 @@ class Wrapper {
   }
 
   handleError(error) {
-    if(error.response && error.response.status === 401) {
+    if(error.response && error.response.status && error.response.status === 401) {
       router.push({name:"login"});
       return Promise.resolve();
     }

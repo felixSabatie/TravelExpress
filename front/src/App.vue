@@ -35,6 +35,11 @@
               name: 'edit-account'
             }
           }, {
+            name: 'Mes trajets',
+            link: {
+              name: 'user-lifts'
+            }
+          }, {
             name: 'Se déconnecter',
             link: {
               name: 'disconnect'

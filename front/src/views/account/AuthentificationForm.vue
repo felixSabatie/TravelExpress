@@ -102,7 +102,7 @@
           this.getCurrentUser();
           this.$router.push({name: 'search'})
         }).catch(error => {
-          if(error.response.status === 404) {
+          if(error.response && error.response.status === 404) {
             M.toast({html: 'Vos identifiants sont incorrects, veuillez réessayer'})
           }
           console.error(error)//TODO : handle error
@@ -115,7 +115,7 @@
         }).then(() => {
           this.login()
         }).catch(error => {
-          if(error.response.status === 422) {
+          if(error.response && error.response.status === 422) {
             M.toast({html: 'Le formulaire n\'est pas valide'})
           }
           console.error(error)

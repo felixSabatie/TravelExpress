@@ -7,6 +7,7 @@ import Register from './views/account/Register'
 import Disconnect from './views/account/Disconnect'
 import SearchLift from './views/lift/SearchLift'
 import EditAccount from './views/account/Edit'
+import UserLifts from './views/account/UserLifts'
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/account/edit',
       name: 'edit-account',
       component: EditAccount,
+    },
+    {
+      path: '/account/lifts',
+      name: 'user-lifts',
+      component: UserLifts,
     },
   ]
 })
