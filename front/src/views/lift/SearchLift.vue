@@ -124,6 +124,12 @@
         .btn {
           margin-left: 10px;
         }
+
+        @media only screen and (max-width: 601px) {
+          :not(:last-child) {
+            margin-bottom: 10px;
+          }
+        }
       }
     }
 

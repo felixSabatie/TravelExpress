@@ -22,7 +22,7 @@
         <div class="input-field col s6">
           <i class="material-icons prefix">phone</i>
           <input v-model="account.phone" id="phone" type="text" class="validate">
-          <label for="phone">Numéro de téléphone</label>
+          <label for="phone">Téléphone</label>
         </div>
       </div>
 
@@ -47,7 +47,7 @@
     methods: {
       ...mapActions(['setCurrentAccount']),
       saveAccount() {
-        axios.put(`${serverAddress}/api/accounts/${this.account.id}`, this.account).then(response => {
+        axios.put(`${serverAddress}/api/accounts/${this.account.id}`, this.account).then(() => {
           this.setCurrentAccount(this.account)
           M.toast({html: 'Les modifications ont bien été enregistrées'})
         }).catch(error => {
