@@ -36,5 +36,9 @@
     text-align : center;
   }
 
+  .city{
+    font-weight: bold;
+  }
+
 
 </style>
